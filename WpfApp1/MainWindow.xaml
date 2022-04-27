@@ -7,12 +7,44 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="200">
     <Window.DataContext>
-        <local:MainViewModel/>
+        <local:MainViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="textBoxInError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Style1" TargetType="TextBox">
+            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid Height="auto">
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            </Border>
+                            <ItemsControl ItemsSource="{TemplateBinding Validation.Errors}" HorizontalAlignment="Right">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Foreground="Red" Text="{Binding ErrorContent}"></TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <StackPanel>
         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBox Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Style="{StaticResource Style1}" Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <Button Content="click" Command="{Binding Click}"></Button>
     </StackPanel>
 </Window>

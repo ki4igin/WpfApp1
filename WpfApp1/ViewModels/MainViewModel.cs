@@ -19,47 +19,46 @@ public class MainViewModel : MyClass<MainViewModel>
         Name = "Artem";
         Age = 30;
 
-        AddRule(nameof(Age), x => x.Age is > 10 and < 100, "Errrrrooooorrr");
-        AddRule(nameof(Time), x => x.Time is > 2 and < 10, "Errrrrooooorrr");
+        AddRule(x => x.Age is > 10 and < 100, nameof(Age), "Errrrrooooorrr");
+        AddRule(x => x.Time is > 2 and < 10, nameof(Time), "Errrrroroooorrr");
+    
 
-        // ErrorsChanged += (_, arg) =>
-        // {
-        //     if (arg.PropertyName is nameof(Time))
-        //        
-        // };
+    // ErrorsChanged += (_, arg) =>
+    // {
+    //     if (arg.PropertyName is nameof(Time))
+    //        
+    // };
 
-        // Rules.Add(new DelegateRule<MainViewModel>(
-        //     nameof(Name),
-        //     "Name cannot be empty.",
-        //     x => !string.IsNullOrEmpty(x.Name)));
-        //
-        // // Rules.Add(new DelegateRule<MainViewModel>(
-        // //     nameof(Age),
-        // //     "Name cannot be empty.",
-        // //     x => x.Age is > 10 and < 100));
-        //
-        // Rules.Add(
-        //     nameof(Age),
-        //     "Name cannot be empty.",
-        //     x => x.Age is > 10 and < 100);
+    // Rules.Add(new DelegateRule<MainViewModel>(
+    //     nameof(Name),
+    //     "Name cannot be empty.",
+    //     x => !string.IsNullOrEmpty(x.Name)));
+    //
+    // // Rules.Add(new DelegateRule<MainViewModel>(
+    // //     nameof(Age),
+    // //     "Name cannot be empty.",
+    // //     x => x.Age is > 10 and < 100));
+    //
+    // Rules.Add(
+    //     nameof(Age),
+    //     "Name cannot be empty.",
+    //     x => x.Age is > 10 and < 100);
 
-        var timer = new Timer(1000);
-        timer.Elapsed += (_, _) => Time++;
-        timer.Start();
+    var timer = new Timer(1000);
+    timer.Elapsed += (_, _) => Time++;
+    timer.Start();
 
-        var timer1 = new DispatcherTimer(
-            TimeSpan.FromMilliseconds(1000),
-            DispatcherPriority.Normal,
-            (sender, args) => CommandManager.InvalidateRequerySuggested(),
-            Dispatcher.CurrentDispatcher);
+    var timer1 = new DispatcherTimer(
+        TimeSpan.FromMilliseconds(1000),
+        DispatcherPriority.Normal,
+        (sender, args) => CommandManager.InvalidateRequerySuggested(),
+        Dispatcher.CurrentDispatcher);
+}
 
+private SimpleCommand? _testCommand2;
+public SimpleCommand Click => _testCommand2 ??= new SimpleCommand(
+    execute: () => Age++,
+    canExecute: () => !HasErrors
+);
 
-    }
-
-    private SimpleCommand? _testCommand2;
-
-    public SimpleCommand Click => _testCommand2 ??= new SimpleCommand(
-        execute: () => Age++,
-        canExecute: () => !HasErrors
-    );
 }
