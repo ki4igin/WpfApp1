@@ -40,16 +40,16 @@ public class MyClass<T> : ViewModelBase, INotifyDataErrorInfo where T : MyClass<
 
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
-    protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        base.OnPropertyChanged(propertyName);
-        if (_validateProps.Contains(propertyName))
-        {
-            Debug.WriteLine($"current prop {propertyName}");
-            //OnErrorsChangedChanged(propertyName);
-            //base.OnPropertyChanged(nameof(HasErrors));
-        }
-    }
+    // protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
+    // {
+    //     base.OnPropertyChanged(propertyName);
+    //     if (_validateProps.Contains(propertyName))
+    //     {
+    //         Debug.WriteLine($"current prop {propertyName}");
+    //         //OnErrorsChangedChanged(propertyName);
+    //         //base.OnPropertyChanged(nameof(HasErrors));
+    //     }
+    // }
 
     protected virtual void OnErrorsChangedChanged([CallerMemberName] string propertyName = "")
     {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -13,6 +14,7 @@ public class ViewModelBase : INotifyPropertyChanged
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
     {
+        Debug.WriteLine($"OnPropertyChanged {propertyName}");
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

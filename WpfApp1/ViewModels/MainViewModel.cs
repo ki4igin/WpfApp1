@@ -20,7 +20,7 @@ public class MainViewModel : MyClass<MainViewModel>
         Age = 30;
 
         AddRule(x => x.Age is > 10 and < 100, nameof(Age), "Errrrrooooorrr");
-        AddRule(x => x.Time is > 2 and < 10, nameof(Time), "Errrrroroooorrr");
+        AddRule(x => x.Time % 10 is > 2 and < 8, nameof(Time), "Errrrroroooorrr");
     
 
     // ErrorsChanged += (_, arg) =>
